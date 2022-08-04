@@ -1,2 +1,2 @@
 # AXYYA_project
-nodejs app project AXXYA tech
+nodejs app project AXYYA tech

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: nodejs-app
-        image: "codesameer/node:latest"
+        image: "codesameer/nodeapp:1.0"
         ports:
           - containerPort: 3000
 ---
@@ -29,9 +29,8 @@ metadata:
 spec:
   selector:
     app: nodejs-app
-  type: LoadBalancer
+  type: NodePort
   ports:
   - protocol: TCP
-    port: 3000
+    port: 80
     targetPort: 3000
-    nodePort: 31002

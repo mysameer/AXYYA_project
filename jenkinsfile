@@ -43,6 +43,7 @@ pipeline{
 				sh 'docker push codesameer/nodeapp:1.0'
 			}
 		}
+<<<<<<< HEAD
 		
 		stage('deploy') {
 		    steps {
@@ -52,6 +53,19 @@ pipeline{
 		    }
 		}
     }
+=======
+	}
+	
+	    stage('Deploying App to Kubernetes') {
+	        steps {
+	            script {
+	                kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes") {
+	                    
+	                }
+	            }
+	        }
+	    }
+>>>>>>> 16068d96e36b813a34f35a733e7d36bed1af4896
 
 	post {
 		always {

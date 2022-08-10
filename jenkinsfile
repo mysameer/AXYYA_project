@@ -25,47 +25,38 @@ pipeline{
 		stage('scan docker image') {
 		    
 		    steps {
+		        catchError(buildResult: 'SUCCESS',stageResult: 'FAILURE') {
 		        sh "trivy image codesameer/nodeapp:1.0 > scanlog.txt"
+		            
+		        }
 		    }
 		}
 		
 
-		stage('Login') {
+		stage('Login to Dockerhub') {
 
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
-		stage('Push') {
+		stage('Push image to Dockerhub') {
 
 			steps {
 				sh 'docker push codesameer/nodeapp:1.0'
 			}
 		}
-<<<<<<< HEAD
 		
-		stage('deploy') {
+		stage('deploy to K8s_cluster') {
 		    steps {
 		        script {
 		            kubernetesDeploy (configs: 'Deployment.yml', kubeconfigId: 'k8s_cluster')
 		        }
 		    }
 		}
+		
+
     }
-=======
-	}
-	
-	    stage('Deploying App to Kubernetes') {
-	        steps {
-	            script {
-	                kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes") {
-	                    
-	                }
-	            }
-	        }
-	    }
->>>>>>> 16068d96e36b813a34f35a733e7d36bed1af4896
 
 	post {
 		always {

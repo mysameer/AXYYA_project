@@ -22,6 +22,13 @@ pipeline{
 			}
 		}
 		
+		stage('scan docker image') {
+		    
+		    steps {
+		        sh "trivy image codesameer/nodeapp:1.0 > scanlog.txt"
+		    }
+		}
+		
 
 		stage('Login') {
 
@@ -36,17 +43,15 @@ pipeline{
 				sh 'docker push codesameer/nodeapp:1.0'
 			}
 		}
-	}
-	
-	    stage('Deploying App to Kubernetes') {
-	        steps {
-	            script {
-	                kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes") {
-	                    
-	                }
-	            }
-	        }
-	    }
+		
+		stage('deploy') {
+		    steps {
+		        script {
+		            kubernetesDeploy (configs: 'Deployment.yml', kubeconfigId: 'k8s_cluster')
+		        }
+		    }
+		}
+    }
 
 	post {
 		always {

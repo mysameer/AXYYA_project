@@ -1,5 +1,5 @@
 # Node_project
-nodejs app project AXYYA tech
+nodejs app project 
 
 ## Author
 ## Sameer B

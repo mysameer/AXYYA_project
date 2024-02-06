@@ -10,5 +10,5 @@ nodejs app project
 - used ec2 instance as a host machine of t2-micro
 - did not use local machine for the project 
 
-Thank you .
+Thank you .......
 
